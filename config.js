@@ -19,9 +19,10 @@ module.exports = {
     //服务端路由
     mainpage:'/index',
     blogconsolepage:'/blogconsole',
-
+    login:'/login',
 
     //创造页面设置
-    makeblogconsolepage:'blogconsole'
+    makeblogconsolepage:'blogconsole',
+    makelogin:'bloglogin'
 };
 

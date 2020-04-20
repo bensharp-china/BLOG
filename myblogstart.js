@@ -16,6 +16,12 @@ app.use(config.blogconsolepage, function (req, res) {
     res.send(makehtml.makehtmlplus(config.makeblogconsolepage));
       });
 
+
+      
+app.use(config.login, function (req, res) {
+  console.log('123');
+    res.send(makehtml.makehtmlplus(config.makelogin));
+      });
 // 监听端口，等待连接
 const port=config.serverPort;
 app.listen(port);

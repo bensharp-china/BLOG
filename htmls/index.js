@@ -8,6 +8,7 @@ const config=require(path.join(__dirname, "../config.js"));
 const headfilepathplus=path.join(__dirname,"./httphead.html");
 const myblogconsolefilepath=path.join(__dirname,"./myblogcosole.html");
 const myblogmainpagehtmlfilepath=path.join(__dirname,"./myblogmainpage.html");
+const myblogloginhtmlfilepath=path.join(__dirname,"./login.html");
 //获取READ方法
 const read=require(path.join(__dirname,"../lib/readfileutil.js"));
 
@@ -34,6 +35,8 @@ function makehtmlplus(what){
              case config.makeblogconsolepage:
                     output+=read.outputfile(myblogconsolefilepath);
                  break;
+                 case config.makelogin:
+                    output+=read.outputfile(myblogloginhtmlfilepath);
             default:
            
                 output+=read.outputfile(myblogmainpagehtmlfilepath);

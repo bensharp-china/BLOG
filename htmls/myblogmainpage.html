@@ -24,7 +24,7 @@ th,td{
   color: #777777;  
 }
 .fontsizedefult{
-  font-size: 18px;
+  font-size: 15px;
   font-style:initial;
 }
 .interval_left{
@@ -45,7 +45,7 @@ th,td{
 
 <script type="text/javascript">
 $(document).ready(function(){
-  $("#consoleguide").attr("href",ajaxdir+"/blogconsole");
+  $("#gotologin").attr("href",ajaxdir+"/login");
 });
 
 </script>
@@ -69,8 +69,9 @@ $(document).ready(function(){
                     <input type="text" class="form-control" placeholder="文章关键字">
                 </div>
                 <button type="submit" class="btn btn-default">提交</button>
-                <a href="#" class='fontsizedefult fontcolordefult interval_left'>登录我的BLOG</a>
-                <a id="consoleguide"  class='fontsizedefult fontcolordefult interval_left'>控制台</a>
+                <label class='fontcolordefult interval_left'>您还未登录，请</label>
+                <a href="#" class='fontsizedefult fontcolordefult interval_left' id="gotologin">登录BLOG</a>
+              
           
             </form>
             </div>
