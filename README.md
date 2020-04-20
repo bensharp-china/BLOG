@@ -1,2 +1,1 @@
-# BLOG
-myblog
+# Math

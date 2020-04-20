@@ -1,0 +1,18 @@
+{
+  "name": "coachfox",
+  "version": "1.0.1",
+  "description": "my lib",
+  "main": "ipaddr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "coachfox",
+  "license": "ISC",
+  "dependencies": {
+    "co": "file:node_modules/co",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.6",
+    "multiparty": "^4.2.1",
+    "wafer-node-session": "^1.0.10"
+  }
+}
