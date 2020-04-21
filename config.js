@@ -7,12 +7,20 @@ module.exports = {
     //database信息
     database:'blogdata',
     //mysql数据库链接配置信息
-    //mysqlHost:'127.0.0.1',
-    mysqlHost:'132.232.109.62',
-    mysqluser: 'xiabin',
-    mysqlpassword : '741862xh',
-    mysqlport: '3306',
-    mysqldatabase:'blogdata',
+    
+    mysqlhost:{
+   host:'132.232.109.62',
+   user:'xiabin',
+   password:'753951xh',
+    port:'3306',
+    database:'blogdata'},
+ 
+    localmysqlhost:{
+    host:'127.0.0.1',
+    user:'xiabin',
+    password:'741862xh',
+    port:'3306',
+    database:'blogdata'},
     //客户端路由
     blogconsole:'/blogconsole',
 
@@ -20,9 +28,10 @@ module.exports = {
     mainpage:'/index',
     blogconsolepage:'/blogconsole',
     login:'/login',
-
+    test:'/test',
     //创造页面设置
     makeblogconsolepage:'blogconsole',
-    makelogin:'bloglogin'
+    makelogin:'bloglogin',
+    maketest:'test'
 };
 

@@ -9,6 +9,7 @@ const headfilepathplus=path.join(__dirname,"./httphead.html");
 const myblogconsolefilepath=path.join(__dirname,"./myblogcosole.html");
 const myblogmainpagehtmlfilepath=path.join(__dirname,"./myblogmainpage.html");
 const myblogloginhtmlfilepath=path.join(__dirname,"./login.html");
+const mytestfilepath=path.join(__dirname,"../test/test.html");
 //获取READ方法
 const read=require(path.join(__dirname,"../lib/readfileutil.js"));
 
@@ -37,13 +38,18 @@ function makehtmlplus(what){
                  break;
                  case config.makelogin:
                     output+=read.outputfile(myblogloginhtmlfilepath);
+                    break
+                    case config.maketest:
+                      output+='<script type=\"text/javascript\">; const hostmessage=\"host:'+config.mysqlhost.host+'\";</script>';
+                      output+=read.outputfile(mytestfilepath);
+                      break;
             default:
            
                 output+=read.outputfile(myblogmainpagehtmlfilepath);
          }
         
         output+='</body></html>';
-    // console.log(output);
+    //console.log(output);
 return output;
 
 }

@@ -2,6 +2,7 @@ const express = require('express');
 const path=require('path');
 const config=require(path.join(__dirname, "./config.js"));
 const makehtml=require(path.join(__dirname, "./htmls/index.js"));
+const mysqlc=require(path.join(__dirname, "./lib/mysqdatautil.js"));
 const cookieParser= require('cookie-parser');
 
 const app = express();
@@ -19,8 +20,17 @@ app.use(config.blogconsolepage, function (req, res) {
     res.send(makehtml.makehtmlplus(config.makeblogconsolepage));
       });
 
+app.use(config.test,function(req, res){
+  res.send(makehtml.makehtmlplus(config.maketest));
+})
+    
+//处理中间件
 
-      
+app.use('/gettestconnect', function (req, res) {
+
+  mysqlc.testconnect(req,res);
+})
+
 app.use(config.login, function (req, res) {
   console.log('123');
     res.send(makehtml.makehtmlplus(config.makelogin));
