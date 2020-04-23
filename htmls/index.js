@@ -40,7 +40,7 @@ function makehtmlplus(what){
                     output+=read.outputfile(myblogloginhtmlfilepath);
                     break
                     case config.maketest:
-                      output+='<script type=\"text/javascript\">; const hostmessage=\"host:'+config.mysqlhost.host+'\";</script>';
+                      output+='<script type=\"text/javascript\">; const hostmessage=\"host:'+config.localmysqlhost.host+'\";</script>';
                       output+=read.outputfile(mytestfilepath);
                       break;
             default:
