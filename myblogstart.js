@@ -11,34 +11,45 @@ const app = express();
 app.use(cookieParser());
 //校验区
 //检查传入的字符串是否符合规范,此方法放入客户端
-function verifyinput(stringtoverify){
+function getmenus(req,res){
+  const promise = new Promise((resolve, reject) => {
+    var q='select  brolefunctionname from selectusermenu where user_name=?';
+    var tmp;
+    if(req.cookies.user_name){
+      tmp=req.cookies.user_name;
+    }else{
+      tmp='visitor'
+    }
+  mysqlc.databasequeryin(q,tmp,resolve);
+ });
+ promise.then(function(data){
+   //res.send({menus:data})
+   console.log({menus:data});
+ });
 
-}
+
+};
 //检验登录传入的req字符串
 
-function resetreq(req){
-   if(req.username===''||req.passwd==='')
-   { return false;}
-}
+
 //用户验证,relogin判断是否要重新登录
 function scanuser(req, res,login){
 if(login){
+//清除COOKIE
+res.clearCookie('user_name');
+res.clearCookie('user_profile_photo');
+res.clearCookie('user_nicname');
+res.clearCookie('user_id');
 //promise同步
-
 const promise = new Promise((resolve, reject) => {
-  console.log(req.query.username+''+req.query.passwd);
+
   verify.verifypersonexist([req.query.username,req.query.passwd],resolve);
 });
 promise.then(function(data){
   if(data.userflag){
      res.send({userflag:data.userflag})
   }else{
-     res.clearCookie('user_name');
-     res.clearCookie('user_profile_photo');
-     res.clearCookie('user_nicname');
-     res.clearCookie('user_id');
  
-    
     res.cookie("user_name",data.user_name,{maxAge: 900000, httpOnly: true});
     res.cookie("user_profile_photo",data.user_profile_photo,{maxAge: 900000, httpOnly: true});
     res.cookie("user_nicname",data.user_nicname,{maxAge: 900000, httpOnly: true});
@@ -47,21 +58,14 @@ promise.then(function(data){
     console.log(data);
   }
 }  )
-////  
+//// 非登录行为
   
- 
 }else{
-  if(req.cookies.name){
-     console.log("当前顾客有效");
-     console.log("当前顾客为："+req.cookies.name);
-     
-   }else{
-    console.log("当前没有任何有效的顾客,请重新登录！")
-    
-   }
+  getmenus(req,res,req.cookies.user_name);
+ 
 }
 
-console.log("当前顾客为："+req.cookies.name);
+console.log("当前顾客为："+req.cookies.user_name);
  
 }
 
@@ -72,8 +76,10 @@ app.use(config.login, function (req, res) {
     });
 ///////
 app.use(config.mainpage, function (req, res) {
-  //scanuser(req, res,true,'coachfox');
   res.send(makehtml.makehtmlplus(''));
+  //不用登录，用检查用户功能
+  scanuser(req, res,false);
+  
    });
 
 
