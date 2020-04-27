@@ -22,7 +22,7 @@ function makehtmlplus(what){
 
        output+=read.outputfile(headfilepathplus);
          output+= '<script type=\"text/javascript\">; const ajaxdir=\"'+config.mybloghost+'\";</script>';
-       
+
          switch(what)
          {
         

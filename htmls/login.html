@@ -48,7 +48,7 @@ function isempty(comp){
         }else{
 
           $.get(ajaxdir+'/goonlogin',
-          {username:$('#username').val().trim(),passwd:$('#password').val().trim()},
+          {user_name:$('#username').val().trim(),user_passwd:$('#password').val().trim()},
           function(data,status){
             if(data.userflag){
               $('#username').val('');
