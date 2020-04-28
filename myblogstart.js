@@ -20,40 +20,6 @@ function sendpage(res){
 
 
 //用户验证,relogin判断是否要重新登录
-function scanuser(req, res,login,callback){
-  var tmp;
-if(login){
-  //tmp=[req.query.user_name,req.query.user_passwd];
-  tmp=req.query.user_name;
-//清除COOKIE
-res.clearCookie('user_name');
-res.clearCookie('user_profile_photo');
-res.clearCookie('user_nicname');
-res.clearCookie('user_id');
-res.clearCookie('user_menus');
-}else{
-  tmp=req.cookies.user_name;
-}
-const promise = new Promise((resolve, reject) => {
- // var q='SELECT * FROM usermessage where user_name=? and user_passwd=?';
- var q='SELECT * FROM usermessage where user_name=? ';
-mysqlc.databasequeryin(q,tmp,resolve);
-});
-promise.then(function(data){
-//zheli
-if(data){
-res.cookie("user_name",data[0].user_name,{maxAge: 900000, httpOnly: true});
-res.cookie("user_profile_photo",data[0].user_profile_photo,{maxAge: 900000, httpOnly: true});
-res.cookie("user_nicname",data[0].user_nicname,{maxAge: 900000, httpOnly: true});
-res.cookie("user_id",data[0].user_id,{maxAge: 900000, httpOnly: true});
-res.cookie("user_menus",data[0].brolefunctionname,{maxAge: 900000, httpOnly: true});
-callback(res);}
-else{
-  return;
-}
-
-});
-}
 
 //登录
 app.use(config.login, function (req, res) {
@@ -64,7 +30,7 @@ app.use(config.login, function (req, res) {
 app.use(config.mainpage, function (req, res) {
   
   //不用登录，用检查用户功能
- scanuser(req, res,false,sendpage);
+  verify.scanuser(req, res,false,sendpage);
   console.log("当前顾客为："+req.cookies.user_name);
    });
 
@@ -95,8 +61,14 @@ app.use('/gettestconnect', function (req, res) {
   mysqlc.testconnect(req,res);
 })
 //处理登录中间件
+//登录
 app.use('/goonlogin',function(req,res){
-  scanuser(req, res,true,sendpage);
+  verify.scanuser(req, res,true,sendpage);
+})
+//登出
+app.use('/goonlogout',function(req,res){
+  verify.logout(res);
+
 })
 // 监听端口，等待连接
 const port=config.serverPort;
