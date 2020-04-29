@@ -16,13 +16,15 @@ const read=require(path.join(__dirname,"../lib/readfileutil.js"));
 //html拼装器
 
 
-function makehtmlplus(what){
+function makehtmlplus(what,data){
   
     output='';
 
        output+=read.outputfile(headfilepathplus);
          output+= '<script type=\"text/javascript\">; const ajaxdir=\"'+config.mybloghost+'\";</script>';
-
+         if(data){
+         output+='<script type=\"text/javascript\">; const user_name=\"'+data[0].user_name+'\";</script>';
+        }
          switch(what)
          {
         

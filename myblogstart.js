@@ -4,19 +4,22 @@ const config=require(path.join(__dirname, "./config.js"));
 const makehtml=require(path.join(__dirname, "./htmls/index.js"));
 const mysqlc=require(path.join(__dirname, "./lib/mysqldatautil.js"));
 const cookieParser= require('cookie-parser');
+var session = require('express-session');
 const verify=require(path.join(__dirname, "./lib/verify.js"));
 //const promise=require('promise')
 
 const app = express();
-app.use(cookieParser());
+app.use(cookieParser('tvxqcooler'));
+app.use(session({
+  secret: 'tvxqcooler',//与cookieParser中的一致
+  resave: true,
+  saveUninitialized:true
+}));
 //校验区
 //检查传入的字符串是否符合规范,此方法放入客户端
 
   //公共页面调用方法
-function sendpage(res){
-  res.send(makehtml.makehtmlplus(''));
-  
-}
+ 
 
 
 //用户验证,relogin判断是否要重新登录
@@ -30,18 +33,18 @@ app.use(config.login, function (req, res) {
 app.use(config.mainpage, function (req, res) {
   
   //不用登录，用检查用户功能
-  verify.scanuser(req, res,false,sendpage);
-  console.log("当前顾客为："+req.cookies.user_name);
+  verify.scanuser(req, res,false,config.makemainpage);
+  //console.log("当前顾客为："+req.cookies.user_name);
    });
 
 
 app.use(config.blogconsolepage, function (req, res) {
   
-    res.send(makehtml.makehtmlplus(config.makeblogconsolepage));
+    res.send(makehtml.makehtmlplus(config.makeblogconsolepage,null));
       });
 
 app.use(config.test,function(req, res){
-  res.send(makehtml.makehtmlplus(config.maketest));
+  res.send(makehtml.makehtmlplus(config.maketest,null));
 
 //promise同步
   const promise = new Promise((resolve, reject) => {
@@ -63,11 +66,13 @@ app.use('/gettestconnect', function (req, res) {
 //处理登录中间件
 //登录
 app.use('/goonlogin',function(req,res){
-  verify.scanuser(req, res,true,sendpage);
+  verify.scanuser(req, res,true,function(res){
+    res.send(makehtml.makehtmlplus(''));
+  });
 })
 //登出
 app.use('/goonlogout',function(req,res){
-  verify.logout(res);
+  verify.logout(req,res);
 
 })
 // 监听端口，等待连接

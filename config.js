@@ -32,6 +32,7 @@ module.exports = {
     //创造页面设置
     makeblogconsolepage:'blogconsole',
     makelogin:'bloglogin',
-    maketest:'test'
+    maketest:'test',
+    makemainpage:''
 };
 

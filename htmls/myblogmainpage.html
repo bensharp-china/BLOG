@@ -44,11 +44,13 @@ th,td{
 </style>
 
 <script type="text/javascript">
-/*function checkuser(){
-  $.cookie('user_nicname');
-}*/
+
+
+
+
 
 $(document).ready(function(){
+ $('#userdisplay').html('当前用户：'+user_name);
  $("#gotologin").attr("href",ajaxdir+"/login");
  $("#gotologout").bind("click",function(){
   $.get(ajaxdir+'/goonlogout',
@@ -81,6 +83,18 @@ $(document).ready(function(){
        
     </div>
     <div class="container">
+       
+   
+      <nav class="navbar navbar-default searchbar" role="navigation">
+        <div class="container-fluid" id="userbanner"> 
+          <label class='fontcolordefult interval_left'>您还未登录，请</label>
+          <label  id="userdisplay" class='fontcolordefult interval_left'></label>
+          <a href="#" class='fontsizedefult fontcolordefult interval_left' id="gotologin">登录BLOG</a>
+          <a href="#" class='fontsizedefult fontcolordefult interval_left' id="gotologout">登出系统</a>
+        </div>
+      </nav> 
+
+
         <nav class="navbar navbar-default searchbar" role="navigation">
             <div class="container-fluid"> 
             <div class="navbar-header">
@@ -91,9 +105,7 @@ $(document).ready(function(){
                     <input type="text" class="form-control" placeholder="文章关键字">
                 </div>
                 <button type="submit" class="btn btn-default">提交</button>
-                <label class='fontcolordefult interval_left'>您还未登录，请</label>
-                <a href="#" class='fontsizedefult fontcolordefult interval_left' id="gotologin">登录BLOG</a>
-                <a href="#" class='fontsizedefult fontcolordefult interval_left' id="gotologout">登出系统</a>
+               
           
             </form>
             </div>
