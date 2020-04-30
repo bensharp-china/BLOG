@@ -13,6 +13,16 @@ const mytestfilepath=path.join(__dirname,"../test/test.html");
 //获取READ方法
 const read=require(path.join(__dirname,"../lib/readfileutil.js"));
 
+
+
+//数据处理方法
+function dothemeuns(data){
+    var umenus=[];
+    for(var i=0;i<data.length;i++){
+        umenus.push(data[i].brolefunctionname);
+    }
+   return umenus;
+}
 //html拼装器
 
 
@@ -23,7 +33,8 @@ function makehtmlplus(what,data){
        output+=read.outputfile(headfilepathplus);
          output+= '<script type=\"text/javascript\">; const ajaxdir=\"'+config.mybloghost+'\";</script>';
          if(data){
-         output+='<script type=\"text/javascript\">; const user_name=\"'+data[0].user_name+'\";</script>';
+         output+='<script type=\"text/javascript\">; const user_name=\"'+data[0].user_name+'\"; user_menus=\"'+dothemeuns(data)+'\"</script>';
+
         }
          switch(what)
          {

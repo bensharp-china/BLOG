@@ -50,7 +50,7 @@ th,td{
 
 
 $(document).ready(function(){
- $('#userdisplay').html('当前用户：'+user_name);
+ $('#userdisplay').html('当前用户：'+user_name+',菜单目录为：'+user_menus);
  $("#gotologin").attr("href",ajaxdir+"/login");
  $("#gotologout").bind("click",function(){
   $.get(ajaxdir+'/goonlogout',
@@ -59,6 +59,7 @@ $(document).ready(function(){
             if(data){
         
               alert(data.flag);
+              window.location.replace(ajaxdir+'/index');
             }else{
            
             }

@@ -31,10 +31,10 @@ app.use(config.login, function (req, res) {
     });
 ///////
 app.use(config.mainpage, function (req, res) {
-  
+   console.log('当前用户：'+req.session.user_id);
   //不用登录，用检查用户功能
   verify.scanuser(req, res,false,config.makemainpage);
-  //console.log("当前顾客为："+req.cookies.user_name);
+ 
    });
 
 
@@ -45,16 +45,9 @@ app.use(config.blogconsolepage, function (req, res) {
 
 app.use(config.test,function(req, res){
   res.send(makehtml.makehtmlplus(config.maketest,null));
-
 //promise同步
-  const promise = new Promise((resolve, reject) => {
-    verify.verifypersonexist(['coachfox',''],resolve);
-  });
-  promise.then(function(data){
-    console.log(data);
-  }  )
- ////  
 
+ ////  
 
 })
     
