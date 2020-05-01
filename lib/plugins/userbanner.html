@@ -1,0 +1,80 @@
+<script type="text/javascript">
+$(document).ready(function(){
+  if(user_name==='visitor'){
+$('#userbanner').html(
+  '<label class=\'fontcolordefult interval_left\'>您还未登录，请</label>'+    
+         '<a href=\"#\" class=\'fontsizedefult fontcolordefult interval_left\' id=\"gotologin\">登录我的BLOG</a>'+
+       
+         '<label  id=\"userdisplay\" class=\'fontcolordefult interval_left\'></label>'
+);
+
+ $('#userdisplay').html(user_nicname+',早上好！'+'您可以'+user_menus);
+}
+else{
+  $('#userbanner').html(
+   ' <img id=\"userprofilephoto\" class=\"profilephoto\"/>'+
+    '<label  id=\"userdisplay\" class=\'fontcolordefult interval_left\'></label>'
+         
+       
+);
+//$('#userdisplay').html(user_name+',早上好！'+'      '+user_menus);
+var d=   '<div class=\"dropdown\">'+
+    '<button type=\"button\" class=\"btn dropdown-toggle\" id=\"dropdownMenu1\" data-toggle=\"dropdown\">'+user_nicname+'早上好！'+
+       ' <span class=\"caret\"></span>'+
+       '</button>'+
+       '<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">';
+        var arr = user_menus.split(",");
+        var lis=menus_list.split(",");
+      for(var i=0;i<arr.length;i++){
+           
+            d+= 
+        '<li role=\"presentation\">'+
+            '<a  role=\"menuitem\" tabindex=\"-1\" href=\"'+lis[i]+'\" class=\'fontsizedefult fontcolordefult interval_left\' >'+arr[i]+'</a>'+
+         
+       '</li>';
+    }
+
+     d+= 
+        '<li role=\"presentation\">'+
+            '<a  role=\"menuitem\" tabindex=\"-1\" href=\"#\" class=\'fontsizedefult fontcolordefult interval_left\' id=\"gotologout\">登出系统</a>'+
+         
+       '</li> </ul></div>'   
+
+$('#userdisplay').html(d);
+alert(user_menus);
+}
+
+
+$('#userprofilephoto').attr('src',user_profile_photo);
+ $("#gotologin").attr("href",ajaxdir+"/login");
+ $("#gotologout").bind("click",function(){
+
+    let  r= confirm("注意，即将登出系统");
+        if(r)
+        {
+            $.get(ajaxdir+'/goonlogout',
+                 '',
+          function(data,status){
+            if(data){
+        
+              alert(data.flag);
+              window.location.replace(ajaxdir+'/index');
+            }else{
+           
+            }
+           
+          });
+         
+        }
+
+ });
+
+
+
+
+
+});
+
+</script>
+
+

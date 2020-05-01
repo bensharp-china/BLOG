@@ -22,7 +22,6 @@ app.use(session({
  
 
 
-//用户验证,relogin判断是否要重新登录
 
 //登录
 app.use(config.login, function (req, res) {
@@ -32,9 +31,9 @@ app.use(config.login, function (req, res) {
 ///////
 app.use(config.mainpage, function (req, res) {
    console.log('当前用户：'+req.session.user_id);
-  //不用登录，用检查用户功能
-  verify.scanuser(req, res,false,config.makemainpage);
- 
+  //用检查用户功能
+  verify.scanuser(req, res,config.makemainpage);
+   return;
    });
 
 
@@ -59,14 +58,13 @@ app.use('/gettestconnect', function (req, res) {
 //处理登录中间件
 //登录
 app.use('/goonlogin',function(req,res){
-  verify.scanuser(req, res,true,function(res){
-    res.send(makehtml.makehtmlplus(''));
-  });
+  verify.login(req, res,config.makemainpage);
+  
 })
 //登出
 app.use('/goonlogout',function(req,res){
   verify.logout(req,res);
-
+  return;
 })
 // 监听端口，等待连接
 const port=config.serverPort;
