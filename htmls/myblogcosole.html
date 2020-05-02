@@ -2,57 +2,93 @@
 html,body{
  
       height: 100%;
-    color:white;
+    color:cornsilk;
     background-color: #262F3E;
     }
-.label{
-   width: 100%;
-   color: black;
-  background-color: #262F3E;
-    }
-.head{
-padding-top: 5px;
-padding-left:20px;
-padding-bottom: 5px;
-font-size: x-large;
-  background-color: #262F3E;
-}
-.menu{
-  background-color:#333333;
-}
-.contentd{
-  height: 300px;
-  background-color:white;
-}
+
+
+
+
  
     </style>
     
     <script type="text/javascript">
-   
+     $(document).ready(function(){
+    $('#addmoveuser').bind('click',function(){
+     
+      $('#maincontent').html(
+        '用户列表:<input type=\'text\' id=\'userseeker\'/>'
+      );
+    });
+$("#gotologout").bind("click",function(){
+
+let  r= confirm("注意，即将登出系统");
+    if(r)
+    {
+        $.get(ajaxdir+'/goonlogout',
+             '',
+      function(data,status){
+        if(data){
+    
+          alert(data.flag);
+          window.location.replace(ajaxdir+'/index');
+        }else{
+       
+        }
+       
+      });
+     
+    }
+
+});
+
+     });
+
+
+
     </script>
     
     <div class="bodycontent">
-        
-            <div class="head">
-              blog控制台
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">控制台</a>
         </div>
-
-        <div class="row">
-      
-          <div class="col-md-2">
-            
-              <ul class="nav nav-pills nav-stacked menu">
-                  <li><a href="#">功能</a></li>
-                  <li><a href="#">功能</a></li>
-                  <li><a href="#">功能</a></li>
-                  <li><a href="#">功能</a></li>
-                  <li><a href="#">功能</a></li>
+        <div>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                   管理员：团教狸
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a id='gotologout'>登出系统</a></li>
+                    <li class="divider"></li>
+                 
                 </ul>
-          </div>
-          <div class="col-md-10 contentd">
-
-
-          </div>
+            </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       用户管理
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a id="addmoveuser">添加，删除用户</a></li>
+                        <li class="divider"></li>
+                        <li><a >权限管理</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+        
+            </ul>
         </div>
+        </div>
+    </nav>
+
+  
+    <div id="maincontent" class='container'>
+     
+
+    </div>
     
     </div>

@@ -38,8 +38,8 @@ app.use(config.mainpage, function (req, res) {
 
 
 app.use(config.blogconsolepage, function (req, res) {
-  
-    res.send(makehtml.makehtmlplus(config.makeblogconsolepage,null));
+  verify.privilegeverify(req,res,'blogconsole');
+
       });
 
 app.use(config.test,function(req, res){
