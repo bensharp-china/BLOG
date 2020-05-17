@@ -29,10 +29,14 @@ module.exports = {
     blogconsolepage:'/blogconsole',
     login:'/login',
     test:'/test',
+    articlepage:'/articlepage',
+    publisherpage:'/publisher',
     //创造页面设置
     makeblogconsolepage:'blogconsole',
     makelogin:'bloglogin',
     maketest:'test',
-    makemainpage:''
+    makemainpage:'',
+    makearticlepage:'articlepage',
+    makepublisherpage:'publisher'
 };
 

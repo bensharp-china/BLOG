@@ -2,13 +2,15 @@
 $(document).ready(function(){
   if(user_name==='visitor'){
 $('#userbanner').html(
-  '<label class=\'fontcolordefult interval_left\'>您还未登录，请</label>'+    
+  '<div class=\"bannerdefalut\"><label class=\'fontcolordefult interval_left\'>您还未登录，请</label>'+    
          '<a href=\"#\" class=\'fontsizedefult fontcolordefult interval_left\' id=\"gotologin\">登录我的BLOG</a>'+
        
-         '<label  id=\"userdisplay\" class=\'fontcolordefult interval_left\'></label>'
+         '<label  id=\"userdisplay\" class=\'fontcolordefult interval_left\'></label></div>'
 );
 
- $('#userdisplay').html(user_nicname+',早上好！'+'您可以'+user_menus);
+ $('#userdisplay').html('亲爱的'+user_nicname+',您好！您只可以'+
+ '<a href=\"\" class=\'fontsizedefult fontcolordefult interval_left\'>浏览文章明细</a>'
+ );
 }
 else{
   $('#userbanner').html(
@@ -44,7 +46,7 @@ $('#userdisplay').html(d);
 
 }
 
-
+$('#log').attr("href",ajaxdir+"/articlepage");
 $('#userprofilephoto').attr('src',user_profile_photo);
  $("#gotologin").attr("href",ajaxdir+"/login");
  $("#gotologout").bind("click",function(){

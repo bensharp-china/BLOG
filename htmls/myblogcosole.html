@@ -1,25 +1,119 @@
 <style type="text/css">
 html,body{
- 
+      
       height: 100%;
     color:cornsilk;
     background-color: #262F3E;
     }
-
-
-
-
  
+    .higherinterval{
+      margin-top: 20px;
+    }
     </style>
     
     <script type="text/javascript">
      $(document).ready(function(){
-    $('#addmoveuser').bind('click',function(){
      
-      $('#maincontent').html(
-        '用户列表:<input type=\'text\' id=\'userseeker\'/>'
-      );
+         
+//用户管理
+    $('#usermanager').bind('click',function(){
+      $.get(ajaxdir+'/getalluser',
+                 '',
+          function(data,status){
+            if(data){
+        
+ var tmp ;
+
+for(var i=0;i<data.length;i++){
+ tmp+='<tr>'+
+' <td>'+data[i].user_name+'</td>'+
+' <td>'+data[i].brolename+'</td> '+
+' <td><a id=\"'+data[i].user_id+'\">更改用户资料</a></td> '+
+'</tr>';
+}
+
+            var d=  '<div  class=\'container\'>'+
+
+'<div class=\"row\">'+
+
+  '<div class=\"col-sm-2\"><h4>输入用户查询:</h4></div>'+
+  '<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control\" id=\"userseeker\"></div>'+
+ 
+
+'   </div></div>'+
+'<div  class=\"container higherinterval\"><table class=\"table table-striped\">'+
+'<caption>用户列表</caption>'+
+'<thead>'+
+'<tr>'+
+' <th>用户名</th>'+
+' <th>角色</th> '+
+' <th>操作</th> '+
+'</tr>'+tmp+
+'</thead>'+
+'<tbody>'+
+'</tbody>'+
+'</table></div>'
+$('#maincontent').html(d);
+       
+      
+            }else{
+           
+            }
+           
+          });
+   
     });
+
+//权限管理
+
+
+$('#rolemanager').bind('click',function(){
+  $.get(ajaxdir+'/getallrole',
+                 '',
+          function(data,status){
+            if(data){
+              var tmp ;
+
+for(var i=0;i<data.length;i++){
+ tmp+='<tr>'+
+' <td>'+data[i].brolename+'</td> '+
+' <td><a id=\"'+data[i].user_id+'\">更改角色资料</a></td> '+
+'</tr>';
+}
+
+            var d=  
+'<div  class=\"container higherinterval\"><table class=\"table table-striped\">'+
+'<caption>角色列表</caption>'+
+'<thead>'+
+'<tr>'+
+
+' <th>角色名</th> '+
+' <th>操作</th> '+
+'</tr>'+tmp+
+'</thead>'+
+'<tbody>'+
+'</tbody>'+
+'</table></div>'
+$('#maincontent').html(d);
+            }
+
+          }
+  )
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
 $("#gotologout").bind("click",function(){
 
 let  r= confirm("注意，即将登出系统");
@@ -41,6 +135,9 @@ let  r= confirm("注意，即将登出系统");
     }
 
 });
+
+
+
 
      });
 
@@ -73,12 +170,26 @@ let  r= confirm("注意，即将登出系统");
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a id="addmoveuser">添加，删除用户</a></li>
+                        <li><a id="usermanager">添加，删除用户</a></li>
                         <li class="divider"></li>
-                        <li><a >权限管理</a></li>
+                        <li><a id="rolemanager" >权限管理</a></li>
                         <li class="divider"></li>
                     </ul>
                 </li>
+
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                     文章管理
+                      <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><a id="articlemanager">文章管理</a></li>
+                      <li class="divider"></li>
+                      <li><a id="commentmanager" >评论管理</a></li>
+                      <li class="divider"></li>
+                  </ul>
+              </li>
         
             </ul>
         </div>

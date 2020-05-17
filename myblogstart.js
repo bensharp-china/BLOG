@@ -30,9 +30,10 @@ app.use(config.login, function (req, res) {
     });
 ///////
 app.use(config.mainpage, function (req, res) {
-   console.log('当前用户：'+req.session.user_id);
+  console.log('当前用户：'+req.session.user_id);
   //用检查用户功能
   verify.scanuser(req, res,config.makemainpage);
+  
    return;
    });
 
@@ -42,6 +43,15 @@ app.use(config.blogconsolepage, function (req, res) {
 
       });
 
+app.use(config.articlepage,function (req, res) {
+  verify.privilegeverify(req,res,'articlepage');
+
+});
+app.use(config.publisherpage,function(req,res){
+  verify.privilegeverify(req,res,'publisher');
+
+})
+////
 app.use(config.test,function(req, res){
   res.send(makehtml.makehtmlplus(config.maketest,null));
 //promise同步
@@ -65,6 +75,33 @@ app.use('/goonlogin',function(req,res){
 app.use('/goonlogout',function(req,res){
   verify.logout(req,res);
   return;
+})
+//数据获取中间件
+app.use('/getalluser',function(req,res){
+  var dataquery='select user_id,user_name,brolename from userinformation ';
+  var tmp='';
+  const promise = new Promise((resolve, reject) => {
+    mysqlc.databasequeryin(dataquery,tmp,resolve);
+    });
+    promise.then(function(data){
+    if(data){ 
+    res.send(data);
+            }
+            
+        })
+})
+app.use('/getallrole',function(req,res){
+  var dataquery=' select * from blogdata.brole';
+  var tmp='';
+  const promise = new Promise((resolve, reject) => {
+    mysqlc.databasequeryin(dataquery,tmp,resolve);
+    });
+    promise.then(function(data){
+    if(data){ 
+    res.send(data);
+            }
+            
+        })
 })
 // 监听端口，等待连接
 const port=config.serverPort;
