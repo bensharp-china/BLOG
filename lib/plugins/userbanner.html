@@ -1,4 +1,15 @@
 <script type="text/javascript">
+//
+function findcategoryarticle(ob){
+       // let postqueryd={"id":$(ob).attr("id")};
+      
+        alert('kasa');
+}
+//
+
+
+
+
 $(document).ready(function(){
   if(user_name==='visitor'){
 $('#userbanner').html(
@@ -72,10 +83,41 @@ $('#userprofilephoto').attr('src',user_profile_photo);
  });
 
 
+$('#currentcategory').html('当前分类：Linux');
+
+
+
+
+///获取分类数据
+$.get(ajaxdir+'/getcategory',
+                 '',
+          function(data,status){
+            var categorymenucontent='<li class="active"><a href="#">BOLG文章分类：</a></li>';
+            if(data[0]){
+              for (var i=0;i<data.length;i++){
+                categorymenucontent+= '<li><a  id=\"'+data[i].barticle_category_id+'\"   href=\"javascript:void(0);\"  οnclick=\'findcategoryarticle(this)\'>'+data[i].barticle_category_name+'</a></li>';
+              }
+     
+            }else{
+              categorymenucontent+='<li><a href="#">无数据</a></li>'
+            }
+            $('#categorymenu').html(categorymenucontent);
+          });
+
+
+
+////
+
+
+
+
 
 
 
 });
+
+
+
 
 </script>
 

@@ -51,7 +51,7 @@ function isempty(comp){
           {user_name:$('#username').val().trim(),user_passwd:$('#password').val().trim()},
           function(data,status){
             if(data.flag){
-              $('#username').val('');
+        
               $('#password').val('');
               alert(data.flag);
             }else{

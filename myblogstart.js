@@ -79,19 +79,21 @@ app.use('/goonlogout',function(req,res){
 //数据获取中间件
 app.use('/getalluser',function(req,res){
   var dataquery='select user_id,user_name,brolename from userinformation ';
-  var tmp='';
-  const promise = new Promise((resolve, reject) => {
-    mysqlc.databasequeryin(dataquery,tmp,resolve);
-    });
-    promise.then(function(data){
-    if(data){ 
-    res.send(data);
-            }
-            
-        })
+  promisetask(res,dataquery);
 })
 app.use('/getallrole',function(req,res){
   var dataquery=' select * from blogdata.brole';
+  promisetask(res,dataquery);
+})
+
+app.use('/getcategory',function(req,res){
+  var dataquery='select * from blogdata.barticle_category where barticle_category_id<5';
+  promisetask(res,dataquery);
+})
+
+//promise 任务
+function promisetask(res,dataquery)
+{
   var tmp='';
   const promise = new Promise((resolve, reject) => {
     mysqlc.databasequeryin(dataquery,tmp,resolve);
@@ -102,7 +104,7 @@ app.use('/getallrole',function(req,res){
             }
             
         })
-})
+}
 // 监听端口，等待连接
 const port=config.serverPort;
 app.listen(port);
