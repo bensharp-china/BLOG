@@ -79,22 +79,30 @@ app.use('/goonlogout',function(req,res){
 //数据获取中间件
 app.use('/getalluser',function(req,res){
   var dataquery='select user_id,user_name,brolename from userinformation ';
-  promisetask(res,dataquery);
+  promisetask(res,dataquery,'');
 })
 app.use('/getallrole',function(req,res){
   var dataquery=' select * from blogdata.brole';
-  promisetask(res,dataquery);
+  promisetask(res,dataquery,'');
 })
 
 app.use('/getcategory',function(req,res){
   var dataquery='select * from blogdata.barticle_category where barticle_category_id<5';
-  promisetask(res,dataquery);
+  promisetask(res,dataquery,'');
 })
 
+
+app.use('/getcategorycontentdata',function(req,res){
+  console.log(req.query.barticle_category_id)
+  var dataquery='select * from  blogdata.articlecategory where barticle_category_id=?';
+  promisetask(res,dataquery,req.query.barticle_category_id);
+
+})
 //promise 任务
-function promisetask(res,dataquery)
+function promisetask(res,dataquery,tmp)
 {
-  var tmp='';
+  //var tmp='';
+  
   const promise = new Promise((resolve, reject) => {
     mysqlc.databasequeryin(dataquery,tmp,resolve);
     });

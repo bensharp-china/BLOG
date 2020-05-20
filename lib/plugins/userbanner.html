@@ -1,9 +1,37 @@
 <script type="text/javascript">
 //
 function findcategoryarticle(ob){
-       // let postqueryd={"id":$(ob).attr("id")};
-      
-        alert('kasa');
+    
+        $.get(ajaxdir+'/getcategorycontentdata',
+        {barticle_category_id:$(ob).attr("id")},
+          function(data,status){
+          
+            
+            if(data[0]){
+              //
+        var categorycontentdata='<caption>'+data[0].barticle_category_name+'</caption>' +
+                   '<thead><tr><th>文章名称</th><th>作者</th><th>发表时间</th></tr></thead>'+
+                    '<tbody>'
+              for (var i=0;i<data.length;i++){
+                categorycontentdata+='<tr><td><a id=\"'+data[i].barticle_id+'\" href=\"javascript:void(0);\" >'+data[i].barticle_title+'</a></td>'+
+                  '<td>'+data[i].user_nicname+'</td>'+
+                  '<td>'+data[i].publishtime+'</td>';
+              }
+              categorycontentdata+= '</tbody>'
+                
+               
+
+              //
+             
+         
+     
+            }else{
+              categorycontentdata+='<caption>分类中无数据</caption>' +
+                   '<thead><tr><th>文章名称</th><th>作者</th><th>发表时间</th></tr></thead>'+
+                    '<tbody></tbody>'
+            }
+            $('#currentcategorydata').html(categorycontentdata) ;
+          });
 }
 //
 
@@ -95,11 +123,11 @@ $.get(ajaxdir+'/getcategory',
             var categorymenucontent='<li class="active"><a href="#">BOLG文章分类：</a></li>';
             if(data[0]){
               for (var i=0;i<data.length;i++){
-                categorymenucontent+= '<li><a  id=\"'+data[i].barticle_category_id+'\"   href=\"javascript:void(0);\"  οnclick=\'findcategoryarticle(this)\'>'+data[i].barticle_category_name+'</a></li>';
+                categorymenucontent+= '<li><a  id=\"'+data[i].barticle_category_id+'\"   href=\"javascript:void(0);\"  onclick=\"findcategoryarticle(this)\">'+data[i].barticle_category_name+'</a></li>';
               }
      
             }else{
-              categorymenucontent+='<li><a href="#">无数据</a></li>'
+              categorymenucontent+='<li><a href=\"javascript:void(0);\"  >无数据</a></li>'
             }
             $('#categorymenu').html(categorymenucontent);
           });
