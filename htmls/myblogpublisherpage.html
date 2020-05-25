@@ -5,7 +5,10 @@
     .resize{
       resize: none;
     }
-
+    .selectbcategroy
+    {
+      height: 25px;
+    }
     .bodycontent{
      
       background-color: #DAF0FC;
@@ -27,7 +30,48 @@
  
     </style>
     
+    <script type="text/javascript">
+
+   $(document).ready(function(){
+    $.get(ajaxdir+'/getcategory',
+           '',
+          function(data,status){
+               if(data[0])
+               {
+                 for(var i=0;i<data.length;i++){
+                $('#bcategroy').append(  //此处向select中循环绑定数据
+      "<option value="+data[i].barticle_category_id+">"+data[i].barticle_category_name+"</option>");
+      
+                 }
+               }else
+               {
+                $('#bcategroy').append(  //此处向select中循环绑定数据
+      "<option >暂无数据</option>");
+               }
+          })
+
+//提交博客数据
+  $('#blogsubmit').bind('click',function(){
+    alert($("#barticle_contenttext").val())
+
+  var postcontent={
+         barticle_title:$("#barticle_titletext").val().trim(),
+         barticle_content:$("#barticle_contenttext").val(),
+         barticle_category_id:$("#bcategroy").val().trim()
+    }
+    $.post(ajaxdir+'/submitblog',
+           postcontent,
+           function(data,status){
+               alert(status);
+            })
+
+  })
+
+
+   })
     
+    
+    </script>
     
     <div class="bodycontent">
         <div class="container">
@@ -45,26 +89,23 @@
             <form role="form">
                 <div class="form-group">
                   <label for="name" class="fontcolordefult">博客名称：</label>
-                  <input type="text" class="form-control" placeholder="此处输入博客名称">
+                  <input id="barticle_titletext" type="text" class="form-control" placeholder="此处输入博客名称">
                 </div>
                 <div class="form-group">
-                  <label>博客分类：</label>
-                  <select id="bcategroy">
-                  <option>javascript</option>
-                  <option>前端</option>
-                  <option>Lunix</option>
-                  <option>MYSQL</option>
+                  <label>选择博客分类：</label>
+                  <select id="bcategroy" class="selectbcategroy">
+              
                   </select>
       
                 </div>
                 <div class="form-group">
                   <label for="name" class="fontcolordefult">博客内容：</label>
-                  <textarea class="form-control resize " rows="8"></textarea>
+                  <textarea id="barticle_contenttext" class="form-control resize " rows="8"></textarea>
                 </div>
                </form>
 
     
-            <button type="button" class="btn btn-primary">提交博客内容</button>
+            <button  id="blogsubmit" type="button" class="btn btn-primary">提交博客内容</button>
         </div>
       
         <div class="end">

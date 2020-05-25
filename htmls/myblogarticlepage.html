@@ -15,7 +15,10 @@
       color: white;  
         background-color: #337AB7;
     }
- 
+ .imgdisplay{
+  height: 40px;
+   width: 40px;
+ }
     .end{
       text-align: center;
     
@@ -27,7 +30,29 @@
  
     </style>
     
+    <script type="text/javascript">
     
+    $(document).ready(function(){
+      var searchd = window.location.search.slice(4,300).trim();
+      $.get(ajaxdir+'/getarticlecontent',
+            {barticle_id:searchd},
+            function(data,status){
+       if(data[0]){
+       var titletext='<h1>'+data[0].barticle_title+'</h1>';
+       var subtitletext='<h4>作者：<img class=\"imgdisplay\"src=\"'+data[0].user_profile_photo+'\"/>'+data[0].user_nicname+'</h4><h4>最后更改时间：'+data[0].modifytime+'</h4>';
+       var contenttext=data[0].barticle_content
+         $("#title").html(titletext);
+         $("#subtitle").html(subtitletext);
+        $("#maincontent").html(contenttext);
+       }
+            else{
+              alert('wrong')
+            }
+      })
+         
+    })
+    
+    </script>
     
     <div class="bodycontent">
         <div class="container">
@@ -39,7 +64,9 @@
         </div>
     
         <div class="container">
-        
+        <div id="title"></div>
+        <div id="subtitle"></div>
+        <div id="maincontent"></div>
         </div>
       
         <div class="end">

@@ -9,11 +9,12 @@ function findcategoryarticle(ob){
             
             if(data[0]){
               //
-        var categorycontentdata='<caption>'+data[0].barticle_category_name+'</caption>' +
+        var categorycontentdata='<table id=\'currentcategorydata\' class=\"table table-striped\">'+
+        '<caption>当前分类：'+data[0].barticle_category_name+'</caption>' +
                    '<thead><tr><th>文章名称</th><th>作者</th><th>发表时间</th></tr></thead>'+
                     '<tbody>'
               for (var i=0;i<data.length;i++){
-                categorycontentdata+='<tr><td><a id=\"'+data[i].barticle_id+'\" href=\"javascript:void(0);\" >'+data[i].barticle_title+'</a></td>'+
+                categorycontentdata+='<tr><td><a id=\"'+data[i].barticle_id+'\" href=\"'+ajaxdir+'/articlepage?id='+data[i].barticle_id+'\" >'+data[i].barticle_title+'</a></td>'+
                   '<td>'+data[i].user_nicname+'</td>'+
                   '<td>'+data[i].publishtime+'</td>';
               }
@@ -26,7 +27,7 @@ function findcategoryarticle(ob){
          
      
             }else{
-              categorycontentdata+='<caption>分类中无数据</caption>' +
+              categorycontentdata+='<caption>当前分类中无数据</caption>' +
                    '<thead><tr><th>文章名称</th><th>作者</th><th>发表时间</th></tr></thead>'+
                     '<tbody></tbody>'
             }
@@ -77,7 +78,7 @@ var d=   '<div class=\"dropdown\">'+
 
      d+= 
         '<li role=\"presentation\">'+
-            '<a  role=\"menuitem\" tabindex=\"-1\" href=\"#\" class=\'fontsizedefult fontcolordefult interval_left\' id=\"gotologout\">登出系统</a>'+
+            '<a  role=\"menuitem\" tabindex=\"-1\" href=\"javascript:void(0);\"  class=\'fontsizedefult fontcolordefult interval_left\' id=\"gotologout\">登出系统</a>'+
          
        '</li> </ul></div>'   
 

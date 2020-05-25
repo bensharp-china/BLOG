@@ -19,7 +19,27 @@ app.use(session({
 //检查传入的字符串是否符合规范,此方法放入客户端
 
   //公共页面调用方法
- 
+  function GetDate(format) {
+    /**
+    * format=1表示获取年月日
+    * format=0表示获取年月日时分秒
+    * **/
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth()+1;
+    var date = now.getDate();
+    var day = now.getDay();//得到周几
+    var hour = now.getHours();//得到小时
+    var minu = now.getMinutes();//得到分钟
+    var sec = now.getSeconds();//得到秒
+    if (format==1){
+        _time = year+"-"+month+"-"+date
+   }
+   else if (format==2){
+       _time = year+"-"+month+"-"+date+" "+hour+":"+minu+":"+sec
+   }
+   return _time
+}    
 
 
 
@@ -93,9 +113,37 @@ app.use('/getcategory',function(req,res){
 
 
 app.use('/getcategorycontentdata',function(req,res){
-  console.log(req.query.barticle_category_id)
+  
   var dataquery='select * from  blogdata.articlecategory where barticle_category_id=?';
   promisetask(res,dataquery,req.query.barticle_category_id);
+
+})
+
+///获取文章具体内容
+
+app.use('/getarticlecontent',function(req,res){
+  
+  var dataquery='select a.barticle_title,a.barticle_content,b.user_nicname,b.user_profile_photo,a.publishtime,a.modifytime'+
+      ' from blogdata.barticle a,blogdata.buser b where a.user_id=b.user_id and a.barticle_id=?';
+  promisetask(res,dataquery,req.query.barticle_id);
+
+})
+///
+
+app.use('/submitblog',function(req,res){
+   var qstring="insert into blogdata.barticle set ?";
+ mysqlc.dopostd(qstring, function(content){
+ 
+  var contentq={barticle_title:content.barticle_title,
+    barticle_content:content.barticle_content,
+    user_id:req.session.user_id,
+    publishtime:GetDate(1) ,
+    modifytime:GetDate(1) ,
+    enable:1,
+    barticle_category_id:content.barticle_category_id
+  };
+   return contentq; }
+  ,req,res);
 
 })
 //promise 任务
