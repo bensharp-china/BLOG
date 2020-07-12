@@ -82,37 +82,37 @@ app.use(config.test,function(req, res){
     
 //处理中间件
 
-app.use('/gettestconnect', function (req, res) {
+app.use(config.gettestconnect, function (req, res) {
   mysqlc.testconnect(req,res);
 })
 //处理登录中间件
 //登录
-app.use('/goonlogin',function(req,res){
+app.use(config.goonlogin,function(req,res){
   verify.login(req, res,config.makemainpage);
   
 })
 //登出
-app.use('/goonlogout',function(req,res){
+app.use(config.goonlogout,function(req,res){
   verify.logout(req,res);
   return;
 })
 //数据获取中间件
-app.use('/getalluser',function(req,res){
+app.use(config.getalluser,function(req,res){
   var dataquery='select user_id,user_name,brolename from userinformation ';
   promisetask(res,dataquery,'');
 })
-app.use('/getallrole',function(req,res){
+app.use(config.getallrole,function(req,res){
   var dataquery=' select * from blogdata.brole';
   promisetask(res,dataquery,'');
 })
 
-app.use('/getcategory',function(req,res){
+app.use(config.getcategory,function(req,res){
   var dataquery='select * from blogdata.barticle_category where barticle_category_id<5';
   promisetask(res,dataquery,'');
 })
 
 
-app.use('/getcategorycontentdata',function(req,res){
+app.use(config.getcategorycontentdata,function(req,res){
   
   var dataquery='select * from  blogdata.articlecategory where barticle_category_id=?';
   promisetask(res,dataquery,req.query.barticle_category_id);
@@ -121,7 +121,7 @@ app.use('/getcategorycontentdata',function(req,res){
 
 ///获取文章具体内容
 
-app.use('/getarticlecontent',function(req,res){
+app.use(config.getarticlecontent,function(req,res){
   
   var dataquery='select a.barticle_title,a.barticle_content,b.user_nicname,b.user_profile_photo,a.publishtime,a.modifytime'+
       ' from blogdata.barticle a,blogdata.buser b where a.user_id=b.user_id and a.barticle_id=?';
@@ -130,7 +130,7 @@ app.use('/getarticlecontent',function(req,res){
 })
 ///
 
-app.use('/submitblog',function(req,res){
+app.use(config.submitblog,function(req,res){
    var qstring="insert into blogdata.barticle set ?";
  mysqlc.dopostd(qstring, function(content){
  
