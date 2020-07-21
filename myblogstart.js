@@ -17,29 +17,50 @@ app.use(session({
 }));
 //校验区
 //检查传入的字符串是否符合规范,此方法放入客户端
+//
 
+
+
+
+
+
+////
   //公共页面调用方法
-  function GetDate(format) {
-    /**
-    * format=1表示获取年月日
-    * format=0表示获取年月日时分秒
-    * **/
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth()+1;
-    var date = now.getDate();
-    var day = now.getDay();//得到周几
-    var hour = now.getHours();//得到小时
-    var minu = now.getMinutes();//得到分钟
-    var sec = now.getSeconds();//得到秒
-    if (format==1){
-        _time = year+"-"+month+"-"+date
-   }
-   else if (format==2){
-       _time = year+"-"+month+"-"+date+" "+hour+":"+minu+":"+sec
-   }
-   return _time
-}    
+  Date.prototype.pattern=function(fmt) {     
+    var o = {     
+    "M+" : this.getMonth()+1, //月份     
+    "d+" : this.getDate(), //日     
+    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时     
+    "H+" : this.getHours(), //小时     
+    "m+" : this.getMinutes(), //分     
+    "s+" : this.getSeconds(), //秒     
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度     
+    "S" : this.getMilliseconds() //毫秒     
+    };     
+    var week = {     
+    "0" : "/u65e5",     
+    "1" : "/u4e00",     
+    "2" : "/u4e8c",     
+    "3" : "/u4e09",     
+    "4" : "/u56db",     
+    "5" : "/u4e94",     
+    "6" : "/u516d"   
+    };     
+    if(/(y+)/.test(fmt)){     
+      fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));     
+    }     
+    if(/(E+)/.test(fmt)){     
+      fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);     
+    }     
+    for(var k in o){     
+      if(new RegExp("("+ k +")").test(fmt)){     
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));     
+      }     
+    }     
+    return fmt;     
+  }    
+ // 
+  var date = new Date();   
 
 
 
@@ -137,8 +158,8 @@ app.use(config.submitblog,function(req,res){
   var contentq={barticle_title:content.barticle_title,
     barticle_content:content.barticle_content,
     user_id:req.session.user_id,
-    publishtime:GetDate(1) ,
-    modifytime:GetDate(1) ,
+    publishtime:date.pattern("yyyy-MM-dd hh:mm:ss"),
+    modifytime:date.pattern("yyyy-MM-dd hh:mm:ss") ,
     enable:1,
     barticle_category_id:content.barticle_category_id
   };
