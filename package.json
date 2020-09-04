@@ -11,7 +11,7 @@
   "dependencies": {
     "co": "file:node_modules/co",
     "express": "^4.16.3",
-    "mongodb": "^3.1.6",
+    "mongodb": "^3.1.13",
     "multiparty": "^4.2.1",
     "wafer-node-session": "^1.0.10"
   }
