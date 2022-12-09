@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "co": "file:node_modules/co",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "mongodb": "^3.1.6",
     "multiparty": "^4.2.1",
     "wafer-node-session": "^1.0.10"
